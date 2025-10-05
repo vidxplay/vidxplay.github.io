@@ -125,6 +125,28 @@
     return el;
   }
 
+  // Randomize order (Fisher–Yates)
+  function shuffle(arr){
+    for(var i=arr.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  // Find a feature image element by package id (for tests)
+  function featureElById(id){
+    var grid = document.getElementById('apps');
+    var cards = grid.querySelectorAll('.card');
+    for(var i=0;i<cards.length;i++){
+      var pkg = cards[i].querySelector('.pkg');
+      if(pkg && pkg.textContent === id){
+        return cards[i].querySelector('.feature');
+      }
+    }
+    return null;
+  }
+
   function buildCard(app){
     var a = createEl('a', 'card');
     a.href = app.url; a.target = '_blank'; a.rel = 'noopener';
@@ -217,6 +239,7 @@
     if(e.key === '/' && !inInput){ e.preventDefault(); q.focus(); }
     if(e.key === 'Escape' && document.activeElement === q && q.value){ q.value=''; filter(); }
   });
+  shuffle(APPS);
   render(APPS);
 
   // ===== Smoke tests (console) =====
@@ -248,17 +271,21 @@
       var lastCardImg = grid.lastElementChild.querySelector('.feature');
       ok(getComputedStyle(lastCardImg).objectPosition.includes('right') || APPS[APPS.length-1].featurePos.indexOf('right') !== -1, 'Gallery banner should bias to the right');
 
-            // Focal point checks (robust: accept either computedStyle keyword or the configured featurePos)
-      var imgs = grid.querySelectorAll('.card .feature');
-      function hasSide(i, side){
-        var cs = getComputedStyle(imgs[i]).objectPosition || '';
-        var cfg = (APPS[i].featurePos || '');
-        return cs.indexOf(side) !== -1 || cfg.indexOf(side) !== -1;
+            // Focal point checks by id (order-independent)
+      function getCfgPos(id){
+        for(var i=0;i<APPS.length;i++){ if(APPS[i].id===id){ return APPS[i].featurePos || ''; } }
+        return '';
       }
-      ok(hasSide(3,'right'), 'Player banner should bias right');
-      ok(hasSide(1,'right'), 'Files banner should bias right');
-      ok(hasSide(2,'left'), 'Music banner should bias left');
-      ok(hasSide(0,'left'), 'AppLock banner should bias left');
+      function hasSideById(id, side){
+        var el = featureElById(id);
+        var cs = el ? getComputedStyle(el).objectPosition : '';
+        var cfg = getCfgPos(id);
+        return (cs && cs.indexOf(side) !== -1) || (cfg.indexOf(side) !== -1);
+      }
+      ok(hasSideById('com.vidx.vidxplayer','right'), 'Player banner should bias right');
+      ok(hasSideById('com.vidxlab.files','right'), 'Files banner should bias right');
+      ok(hasSideById('com.vidxlab.vidxmusic','left'), 'Music banner should bias left');
+      ok(hasSideById('com.vidxlab.applocker','left'), 'AppLock banner should bias left');
 
       console.log('All smoke tests passed ✅');
     }catch(e){ console.warn('Smoke test failed:', e.message); }
