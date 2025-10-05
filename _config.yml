@@ -3,7 +3,7 @@ description: "My root GitHub Pages site"
 author: "Artimishraa"
 
 # For root site, baseurl must be empty
-url: "https://artimishraa.github.io"
+url: "https://vidxplay.github.io"
 baseurl: ""
 
 theme: minima
