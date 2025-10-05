@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VidX Lab — All Apps</title>
   <meta name="description" content="All Android apps by VidX Lab with links to Google Play." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://play-lh.googleusercontent.com https://vidxplay.github.io data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
   <link rel="preconnect" href="https://play-lh.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://vidxplay.github.io" crossorigin>
+  <link rel="dns-prefetch" href="https://vidxplay.github.io">
   <style>
     /* ===== Play Store–inspired theme (Material-ish) ===== */
     :root{ --bg:#ffffff; --ink:#1f1f1f; --muted:#5f6368; --divider:#e0e0e0; --tile:#fff; --accent:#01875f; }
@@ -34,7 +37,7 @@
     @media (max-width:640px){.card{grid-column:span 12}}
 
     /* Feature region */
-    .feature{width:100%;aspect-ratio:1024/500;border-radius:8px;background:#f1f3f4;object-fit:cover;position:relative;overflow:hidden;transition:transform .35s ease;will-change:transform}
+    .feature{width:100%;height:clamp(110px,12vw,160px);border-radius:8px;background:#f1f3f4;object-fit:cover;position:relative;overflow:hidden;transition:transform .35s ease;will-change:transform}
 
     .row{display:flex;gap:12px;align-items:center}
     .icon{width:56px;height:56px;border-radius:12px;object-fit:cover;border:1px solid var(--divider);background:#f8f9fa}
@@ -48,7 +51,7 @@
     @keyframes ripple{to{transform:scale(12);opacity:0}}
 
     /* gentle parallax on feature image */
-    .card:hover .feature{transform:scale(1.035)}
+    .card:hover .feature{transform:scale(1.02)}
     .card:active .feature{transform:scale(1.01)}
 
     .cta{margin-top:auto;display:flex;gap:10px;align-items:center;justify-content:space-between}
@@ -72,7 +75,7 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <img class="logo" src="https://raw.githubusercontent.com/vidxplay/vidxplay.github.io/refs/heads/main/vidxlab.jpg" alt="VidX Lab logo" loading="lazy" decoding="async">
+        <img class="logo" src="https://vidxplay.github.io/vidxlab.jpg" alt="VidX Lab logo" width="40" height="40" loading="lazy" decoding="async">
         <div>
           <h1>VidX Lab — Apps</h1>
           <div class="sub">Browse all apps from VidX Lab in a Play‑style layout.</div>
@@ -106,11 +109,11 @@
   <script>
   // ===== Data (official feature graphics provided via GitHub URLs) =====
   var APPS = [
-    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/d.png?raw=true",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
-    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/b.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
-    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/c.png?raw=true",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
-    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/a.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
-    {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/f.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
+    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://vidxplay.github.io/d.png",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
+    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://vidxplay.github.io/b.png",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
+    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://vidxplay.github.io/c.png",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
+    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://vidxplay.github.io/a.png",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
+    {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"https://vidxplay.github.io/f.png",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
   ];
 
   // ===== Helpers =====
@@ -131,14 +134,16 @@
     var fg = createEl('img', 'feature');
     fg.loading = 'lazy'; fg.decoding = 'async';
     fg.alt = app.title + ' feature graphic';
+    fg.width = 1024; fg.height = 500; // reserve space to prevent CLS
     fg.src = app.feature; // required per your latest setup
     if(app.featurePos){ fg.style.objectPosition = app.featurePos; }
+    fg.onerror = function(){ try{ this.remove(); }catch(e){} }; // hide if fetch fails
     a.appendChild(fg);
 
     // Icon + meta
     var row = createEl('div', 'row');
     var img = createEl('img', 'icon');
-    img.loading = 'lazy'; img.decoding = 'async';
+    img.loading = 'lazy'; img.decoding = 'async'; img.width = 56; img.height = 56;
     img.alt = app.title + ' icon'; img.src = app.icon;
     var meta = createEl('div', 'meta');
     var title = createEl('div', 'title', app.title);
@@ -152,7 +157,15 @@
     var play = createEl('img', 'play-badge');
     play.alt = 'Get it on Google Play';
     play.src = 'https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg';
-    play.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); try{ window.open(app.url, '_blank', 'noopener'); }catch(e){ location.href = app.url; } });
+    play.addEventListener('click', function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      var isAndroid = /Android/i.test(navigator.userAgent || '');
+      if(isAndroid){
+        // Open in Play Store app when possible
+        try{ location.href = 'market://details?id=' + app.id; return; }catch(_){}
+      }
+      try{ window.open(app.url, '_blank', 'noopener'); }catch(e){ location.href = app.url; }
+    });
     cta.appendChild(pkg); cta.appendChild(play);
 
     a.appendChild(row);
@@ -196,6 +209,14 @@
 
   // ===== Init =====
   document.getElementById('q').addEventListener('input', filter);
+  // keyboard shortcuts: '/' focuses search, Esc clears
+  document.addEventListener('keydown', function(e){
+    var q = document.getElementById('q');
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    var inInput = /INPUT|TEXTAREA/.test(tag);
+    if(e.key === '/' && !inInput){ e.preventDefault(); q.focus(); }
+    if(e.key === 'Escape' && document.activeElement === q && q.value){ q.value=''; filter(); }
+  });
   render(APPS);
 
   // ===== Smoke tests (console) =====
@@ -221,6 +242,7 @@
       // Feature image src check for the first card
       var firstCardImg = grid.querySelector('.card .feature');
       ok(!!firstCardImg && typeof firstCardImg.src === 'string' && firstCardImg.src.length > 0, 'Feature image should be present with a src');
+      ok(firstCardImg.clientHeight <= 180, 'Feature banner should be compact (<=180px)');
 
       // Object position check for Gallery (last item)
       var lastCardImg = grid.lastElementChild.querySelector('.feature');
