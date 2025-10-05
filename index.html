@@ -35,17 +35,6 @@
 
     /* Feature region */
     .feature{width:100%;aspect-ratio:1024/500;border-radius:8px;background:#f1f3f4;object-fit:cover;position:relative;overflow:hidden}
-    .feature.placeholder{display:grid;place-items:center;color:var(--muted);font-weight:600;letter-spacing:.3px}
-
-    /* Generated brand header when no official feature graphic */
-    .feature-brand{background:#0b0b0b}
-    .fg-blur{position:absolute;inset:0;background-position:center;background-size:cover;filter:blur(28px) saturate(1.2) brightness(.8);transform:scale(1.1)}
-    .fg-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55))}
-    .fg-content{position:relative;display:flex;align-items:flex-end;gap:12px;padding:14px}
-    .fg-logo{width:56px;height:56px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:#fff;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-    .fg-text{display:flex;flex-direction:column}
-    .fg-title{color:#fff;font-weight:700;line-height:1.1}
-    .fg-sub{color:rgba(255,255,255,.85);font-size:13px}
 
     .row{display:flex;gap:12px;align-items:center}
     .icon{width:56px;height:56px;border-radius:12px;object-fit:cover;border:1px solid var(--divider);background:#f8f9fa}
@@ -111,13 +100,13 @@
   </div>
 
   <script>
-  // ===== Data (official feature graphics preferred; otherwise we auto-generate a brand header) =====
+  // ===== Data (official feature graphics provided via GitHub URLs) =====
   var APPS = [
-    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/d.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
-    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/b.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
-    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/c.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
-    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/a.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
-    {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/f.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
+    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/d.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
+    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/b.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
+    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/c.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
+    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/a.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
+    {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/f.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
   ];
 
   // ===== Helpers =====
@@ -129,80 +118,18 @@
     return el;
   }
 
-  // Generate a crisp vector banner that mimics official Play feature graphics (keeps file small)
-  function featureSVG(app){
-    var W = 1024, H = 500, pad = 28;
-    var id = (app.id || 'app').replace(/[^a-z0-9]/gi,'');
-    // Choose gradient + icon by app id
-    var g1 = '#2563eb', g2 = '#7c3aed', title = app.title || 'App', sub = app.tagline || '';
-    var icon = 'player';
-    if(/vidxplayer/.test(app.id)){ g1='#0ea5e9'; g2='#6366f1'; icon='player'; sub=sub||'Play everything, beautifully.'; }
-    else if(/vidxlab\.files/.test(app.id)){ g1='#2563eb'; g2='#1d4ed8'; icon='files'; sub=sub||'Files, simplified. Power, unlocked.'; }
-    else if(/vidxlab\.vidxmusic/.test(app.id)){ g1='#fb923c'; g2='#ef4444'; icon='music'; sub=sub||'Effortless Media, Anywhere'; }
-    else if(/applocker|applock/.test(app.id)){ g1='#059669'; g2='#8b5cf6'; icon='lock'; sub=sub||'Fast, modern app locker'; }
-    else if(/vidxlab\.gallery/.test(app.id)){ g1='#2563eb'; g2='#7c3aed'; icon='gallery'; sub=sub||'Fast, secure, and smart gallery for photos & videos'; }
-
-    function iconSVG(kind){
-      if(kind==='player'){
-        return '<g transform="translate(64,160)"><circle cx="84" cy="84" r="84" fill="rgba(255,255,255,0.12)"/>'+
-               '<polygon points="72,48 144,84 72,120" fill="#fff"/></g>';
-      }
-      if(kind==='files'){
-        return '<g transform="translate(56,156)"><rect x="16" y="28" rx="18" ry="18" width="156" height="116" fill="rgba(255,255,255,0.12)"/>'+
-               '<rect x="28" y="60" width="92" height="32" rx="8" fill="#fff"/>'+
-               '<rect x="28" y="96" width="116" height="28" rx="8" fill="#fff" opacity="0.85"/></g>';
-      }
-      if(kind==='music'){
-        return '<g transform="translate(56,156)"><rect x="16" y="28" rx="18" ry="18" width="156" height="116" fill="rgba(255,255,255,0.12)"/>'+
-               '<path d="M64 120c20-30 40-30 60 0" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round"/>'+
-               '<path d="M24 118c18-28 36-28 54 0" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity=".8"/></g>';
-      }
-      if(kind==='lock'){
-        return '<g transform="translate(68,160)"><rect x="20" y="68" width="136" height="90" rx="16" fill="rgba(255,255,255,0.12)"/>'+
-               '<rect x="56" y="48" width="64" height="40" rx="20" fill="#fff"/>'+
-               '<circle cx="88" cy="116" r="10" fill="#fff"/></g>';
-      }
-      if(kind==='gallery'){
-        return '<g transform="translate(56,156)"><rect x="28" y="36" width="140" height="100" rx="14" fill="rgba(255,255,255,0.12)"/>'+
-               '<rect x="44" y="52" width="100" height="76" rx="10" fill="#fff" opacity="0.9"/>'+
-               '<circle cx="70" cy="76" r="12" fill="#2563eb"/>'+
-               '<path d="M64 106l18-20 16 16 12-10 12 14H64z" fill="#93c5fd"/></g>';
-      }
-      return '';
-    }
-
-    var svg = '' +
-      '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(title.replace(/&/g,'&amp;'))+' feature graphic">' +
-      '<defs><linearGradient id="g'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+g1+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>'+
-      '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="url(#g'+id+')"/>'+
-      iconSVG(icon) +
-      '<g fill="#fff">'+
-        '<text x="'+(pad+220)+'" y="230" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-weight="700" font-size="64">'+ title.replace(/&/g,'&amp;') +'</text>'+
-        '<text x="'+(pad+220)+'" y="280" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="24" opacity="0.9">'+ (sub||'').replace(/&/g,'&amp;') +'</text>'+
-      '</g>'+
-      '</svg>';
-    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-  }
-
   function buildCard(app){
     var a = createEl('a', 'card');
     a.href = app.url; a.target = '_blank'; a.rel = 'noopener';
     a.setAttribute('aria-label', app.title + ' — open on Google Play');
 
-    var useOfficialFeature = !!(app.feature && app.feature.length);
-
-    if(useOfficialFeature){
-      var fg = createEl('img', 'feature');
-      fg.loading = 'lazy'; fg.decoding = 'async';
-      fg.alt = app.title + ' feature graphic';
-      fg.src = app.feature; a.appendChild(fg);
-    } else {
-      // Generate a crisp vector banner from title/tagline
-      var fg2 = createEl('img', 'feature');
-      fg2.alt = app.title + ' feature graphic';
-      fg2.src = featureSVG(app);
-      a.appendChild(fg2);
-    }
+    // Feature graphic (external URL provided by you)
+    var fg = createEl('img', 'feature');
+    fg.loading = 'lazy'; fg.decoding = 'async';
+    fg.alt = app.title + ' feature graphic';
+    fg.src = app.feature; // required per your latest setup
+    if(app.featurePos){ fg.style.objectPosition = app.featurePos; }
+    a.appendChild(fg);
 
     // Icon + meta
     var row = createEl('div', 'row');
@@ -273,11 +200,29 @@
     try{
       var grid = document.getElementById('apps');
       ok(grid.children.length === APPS.length, 'Render count should equal APPS length');
+
+      // Title-wide match should keep all visible
       var q = document.getElementById('q');
       q.value = 'vidx'; filter(); ok(grid.children.length === APPS.length, 'Search "vidx" should match all titles');
+
+      // Unlikely query should hide all
       q.value = 'unlikely-zz'; filter(); ok(grid.children.length === 0, 'Unlikely query should hide all');
+
+      // Package id search should return exactly one (Files)
+      q.value = 'com.vidxlab.files'; filter(); ok(grid.children.length === 1, 'Package-id search should return exactly one');
+
+      // Clear resets to full list
       q.value = ''; filter(); ok(grid.children.length === APPS.length, 'Clearing search should restore all');
-      console.log('Play‑theme (no customizer) smoke tests passed ✅');
+
+      // Feature image src check for the first card
+      var firstCardImg = grid.querySelector('.card .feature');
+      ok(!!firstCardImg && typeof firstCardImg.src === 'string' && firstCardImg.src.length > 0, 'Feature image should be present with a src');
+
+      // Object position check for Gallery (last item)
+      var lastCardImg = grid.lastElementChild.querySelector('.feature');
+      ok(getComputedStyle(lastCardImg).objectPosition.includes('right') || APPS[APPS.length-1].featurePos.indexOf('right') !== -1, 'Gallery banner should bias to the right');
+
+      console.log('All smoke tests passed ✅');
     }catch(e){ console.warn('Smoke test failed:', e.message); }
   })();
   </script>
