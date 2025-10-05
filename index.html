@@ -16,7 +16,7 @@
 
     header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:12px}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:40px;height:40px;border-radius:8px;background:conic-gradient(from 45deg, #34a853, #4285f4, #fbbc05, #ea4335, #34a853);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    .logo{width:40px;height:40px;border-radius:8px;object-fit:cover;border:1px solid var(--divider);box-shadow:0 2px 6px rgba(0,0,0,.08)}
     h1{font-size:clamp(20px,3.2vw,28px);margin:0}
     .sub{color:var(--muted);font-size:14px;margin-top:2px}
     .store-link{color:#1a73e8;text-decoration:underline}
@@ -34,7 +34,7 @@
     @media (max-width:640px){.card{grid-column:span 12}}
 
     /* Feature region */
-    .feature{width:100%;aspect-ratio:1024/500;border-radius:8px;background:#f1f3f4;object-fit:cover;position:relative;overflow:hidden}
+    .feature{width:100%;aspect-ratio:1024/500;border-radius:8px;background:#f1f3f4;object-fit:cover;position:relative;overflow:hidden;transition:transform .35s ease;will-change:transform}
 
     .row{display:flex;gap:12px;align-items:center}
     .icon{width:56px;height:56px;border-radius:12px;object-fit:cover;border:1px solid var(--divider);background:#f8f9fa}
@@ -42,10 +42,14 @@
     .title{font-weight:600}
     .tag{color:var(--muted);font-size:13px}
 
-    .card:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.08)}
-    .card:active{transform:translateY(0) scale(.99)}
+    .card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.14)}
+    .card:active{transform:translateY(0) scale(.985)}
     .ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple .45s ease-out;background:rgba(1,135,95,.25);pointer-events:none;opacity:1}
     @keyframes ripple{to{transform:scale(12);opacity:0}}
+
+    /* gentle parallax on feature image */
+    .card:hover .feature{transform:scale(1.035)}
+    .card:active .feature{transform:scale(1.01)}
 
     .cta{margin-top:auto;display:flex;gap:10px;align-items:center;justify-content:space-between}
     .pkg{font-size:12px;color:var(--muted)}
@@ -61,14 +65,14 @@
     .footer-links a{color:#1a73e8;text-decoration:underline}
 
     .card:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(1,135,95,.35),0 2px 6px rgba(0,0,0,.1)}
-    @media (prefers-reduced-motion: reduce){.card{transition:none !important;transform:none !important}.card:hover{transform:none !important;box-shadow:0 1px 2px rgba(0,0,0,.06)}.ripple{display:none !important;animation:none !important}}
+    @media (prefers-reduced-motion: reduce){.card{transition:none !important;transform:none !important}.card:hover{transform:none !important;box-shadow:0 1px 2px rgba(0,0,0,.06)}.ripple{display:none !important;animation:none !important}.card:hover .feature,.card:active .feature{transform:none !important}}
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <img class="logo" src="https://raw.githubusercontent.com/vidxplay/vidxplay.github.io/refs/heads/main/vidxlab.jpg" alt="VidX Lab logo" loading="lazy" decoding="async">
         <div>
           <h1>VidX Lab — Apps</h1>
           <div class="sub">Browse all apps from VidX Lab in a Play‑style layout.</div>
@@ -102,10 +106,10 @@
   <script>
   // ===== Data (official feature graphics provided via GitHub URLs) =====
   var APPS = [
-    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/d.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
-    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/b.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
-    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/c.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
-    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/a.png?raw=true",featurePos:"center",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
+    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/d.png?raw=true",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
+    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/b.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
+    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/c.png?raw=true",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
+    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/a.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
     {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/f.png?raw=true",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
   ];
 
@@ -221,6 +225,18 @@
       // Object position check for Gallery (last item)
       var lastCardImg = grid.lastElementChild.querySelector('.feature');
       ok(getComputedStyle(lastCardImg).objectPosition.includes('right') || APPS[APPS.length-1].featurePos.indexOf('right') !== -1, 'Gallery banner should bias to the right');
+
+            // Focal point checks (robust: accept either computedStyle keyword or the configured featurePos)
+      var imgs = grid.querySelectorAll('.card .feature');
+      function hasSide(i, side){
+        var cs = getComputedStyle(imgs[i]).objectPosition || '';
+        var cfg = (APPS[i].featurePos || '');
+        return cs.indexOf(side) !== -1 || cfg.indexOf(side) !== -1;
+      }
+      ok(hasSide(3,'right'), 'Player banner should bias right');
+      ok(hasSide(1,'right'), 'Files banner should bias right');
+      ok(hasSide(2,'left'), 'Music banner should bias left');
+      ok(hasSide(0,'left'), 'AppLock banner should bias left');
 
       console.log('All smoke tests passed ✅');
     }catch(e){ console.warn('Smoke test failed:', e.message); }
