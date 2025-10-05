@@ -21,15 +21,11 @@
     .sub{color:var(--muted);font-size:14px;margin-top:2px}
     .store-link{color:#1a73e8;text-decoration:underline}
 
-    /* search + edit bar */
-    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:12px 0 16px}
-    .search{flex:1;position:relative}
+    /* search */
+    .search{display:flex;align-items:center;gap:10px;margin:12px 0 16px;position:relative}
     .search input{width:100%;padding:12px 14px 12px 44px;border-radius:24px;border:1px solid var(--divider);background:#f8f9fa;color:var(--ink);outline:none}
     .search .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--muted);border-radius:50%}
     .search .ico::after{content:"";position:absolute;left:10px;top:10px;width:8px;height:2px;background:var(--muted);transform:rotate(45deg)}
-
-    .editbar button{appearance:none;border:1px solid var(--divider);background:var(--tile);padding:10px 14px;border-radius:999px;cursor:pointer}
-    .editbar button:hover{box-shadow:0 1px 3px rgba(0,0,0,.08)}
 
     /* grid */
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
@@ -66,12 +62,6 @@
     .pkg{font-size:12px;color:var(--muted)}
     .play-badge{height:24px;cursor:pointer}
 
-    /* per-card edit controls */
-    .edit-controls{position:absolute;top:8px;right:8px;display:none;gap:6px}
-    .edit-active .edit-controls{display:flex}
-    .edit-btn,.reset-btn{appearance:none;border:1px solid var(--divider);background:rgba(255,255,255,.95);padding:6px 10px;border-radius:999px;font-size:12px;cursor:pointer}
-    .edit-btn:hover,.reset-btn:hover{box-shadow:0 1px 3px rgba(0,0,0,.12)}
-
     /* about + footer */
     .info{margin-top:28px}
     .ibox{background:var(--tile);border:1px solid var(--divider);border-radius:12px;padding:16px}
@@ -98,14 +88,9 @@
       <a class="store-link" href="https://play.google.com/store/apps/dev?id=5192085574932938666&hl=en" target="_blank" rel="noopener">View on Google Play</a>
     </header>
 
-    <div class="topbar">
-      <div class="search">
-        <span class="ico" aria-hidden="true"></span>
-        <input id="q" type="search" placeholder="Search apps (title, description, or package id)" aria-label="Search apps" />
-      </div>
-      <div class="editbar">
-        <button id="toggleEdit" type="button" aria-pressed="false">Customize banners</button>
-      </div>
+    <div class="search">
+      <span class="ico" aria-hidden="true"></span>
+      <input id="q" type="search" placeholder="Search apps (title, description, or package id)" aria-label="Search apps" />
     </div>
 
     <section id="apps" class="grid" aria-live="polite" aria-busy="false"></section>
@@ -125,33 +110,15 @@
     </footer>
   </div>
 
-  <!-- Hidden file input for uploads -->
-  <input id="uploader" type="file" accept="image/*" hidden>
-
   <script>
   // ===== Data (official feature graphics preferred; otherwise we auto-generate a brand header) =====
   var APPS = [
-    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
-    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
-    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
-    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
-    {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
+    {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/d.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
+    {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/b.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
+    {title:"VidX Music – Offline Player",id:"com.vidxlab.vidxmusic",icon:"https://play-lh.googleusercontent.com/M4AOHimN0lrd92lszsvKkh8IzhJAqxfCpKvHtXgPePQJYUVKR5OHZVG1IGXfJT8Q7AeSj6_muoK-1XQHumw9B_Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/c.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.vidxmusic",tagline:"Offline media player for local music & videos."},
+    {title:"VidX Player",id:"com.vidx.vidxplayer",icon:"https://play-lh.googleusercontent.com/LeNMRwNy8x4mf_a-h8UcIhpKsC9M_qYAfxh17CAViXxLOifdRxcbQjoKG7dwh0wn-inZn1KR3oYcj0vTm3F4_0Y=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/a.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidx.vidxplayer",tagline:"Play everything, beautifully."},
+    {title:"VidX Gallery - Photos & Videos",id:"com.vidxlab.gallery",icon:"https://play-lh.googleusercontent.com/uF0muGBpTo2_7QnmGClYxaPmx4-RG4-Qf7KwHGgMP3_WbO4ACJa6eqaLZ0aP_MKmCLVmNgsBbJZTCV_AGD2baA=w240-h480",feature:"https://github.com/vidxplay/vidxplay.github.io/blob/main/f.png?raw=true",url:"https://play.google.com/store/apps/details?id=com.vidxlab.gallery",tagline:"Fast, secure & lightweight gallery for photos and videos."}
   ];
-
-  // ===== Persistence for banners =====
-  var STORAGE_KEY = 'vidx_feature_map';
-  function loadFeatureMap(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }catch(e){ return {}; }
-  }
-  function saveFeatureMap(map){
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); }catch(e){ /* ignore quota */ }
-  }
-  function applyFeatureMap(){
-    var map = loadFeatureMap();
-    for(var i=0;i<APPS.length;i++){
-      var id = APPS[i].id; if(map[id]){ APPS[i].feature = map[id]; }
-    }
-  }
 
   // ===== Helpers =====
   function normalize(s){ return (s || '').toLowerCase(); }
@@ -162,30 +129,60 @@
     return el;
   }
 
-  // Center-crop & resize to 1024x500 (cover)
-  function processImageToBanner(file, cb){
-    var img = new Image();
-    img.onload = function(){
-      var targetW = 1024, targetH = 500, targetR = targetW/targetH;
-      var w = img.naturalWidth, h = img.naturalHeight, r = w/h;
-      var sx, sy, sw, sh;
-      if(r > targetR){ sw = Math.floor(h * targetR); sh = h; sx = Math.floor((w - sw) / 2); sy = 0; }
-      else { sw = w; sh = Math.floor(w / targetR); sx = 0; sy = Math.floor((h - sh) / 2); }
-      var canvas = document.createElement('canvas');
-      canvas.width = targetW; canvas.height = targetH;
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetW, targetH);
-      var data = canvas.toDataURL('image/jpeg', 0.9);
-      cb(null, data);
-    };
-    img.onerror = function(){ cb(new Error('Image decode failed')); };
-    var reader = new FileReader();
-    reader.onload = function(){ img.src = reader.result; };
-    reader.onerror = function(){ cb(new Error('File read failed')); };
-    reader.readAsDataURL(file);
-  }
+  // Generate a crisp vector banner that mimics official Play feature graphics (keeps file small)
+  function featureSVG(app){
+    var W = 1024, H = 500, pad = 28;
+    var id = (app.id || 'app').replace(/[^a-z0-9]/gi,'');
+    // Choose gradient + icon by app id
+    var g1 = '#2563eb', g2 = '#7c3aed', title = app.title || 'App', sub = app.tagline || '';
+    var icon = 'player';
+    if(/vidxplayer/.test(app.id)){ g1='#0ea5e9'; g2='#6366f1'; icon='player'; sub=sub||'Play everything, beautifully.'; }
+    else if(/vidxlab\.files/.test(app.id)){ g1='#2563eb'; g2='#1d4ed8'; icon='files'; sub=sub||'Files, simplified. Power, unlocked.'; }
+    else if(/vidxlab\.vidxmusic/.test(app.id)){ g1='#fb923c'; g2='#ef4444'; icon='music'; sub=sub||'Effortless Media, Anywhere'; }
+    else if(/applocker|applock/.test(app.id)){ g1='#059669'; g2='#8b5cf6'; icon='lock'; sub=sub||'Fast, modern app locker'; }
+    else if(/vidxlab\.gallery/.test(app.id)){ g1='#2563eb'; g2='#7c3aed'; icon='gallery'; sub=sub||'Fast, secure, and smart gallery for photos & videos'; }
 
-  var state = { editMode:false, pendingId:null };
+    function iconSVG(kind){
+      if(kind==='player'){
+        return '<g transform="translate(64,160)"><circle cx="84" cy="84" r="84" fill="rgba(255,255,255,0.12)"/>'+
+               '<polygon points="72,48 144,84 72,120" fill="#fff"/></g>';
+      }
+      if(kind==='files'){
+        return '<g transform="translate(56,156)"><rect x="16" y="28" rx="18" ry="18" width="156" height="116" fill="rgba(255,255,255,0.12)"/>'+
+               '<rect x="28" y="60" width="92" height="32" rx="8" fill="#fff"/>'+
+               '<rect x="28" y="96" width="116" height="28" rx="8" fill="#fff" opacity="0.85"/></g>';
+      }
+      if(kind==='music'){
+        return '<g transform="translate(56,156)"><rect x="16" y="28" rx="18" ry="18" width="156" height="116" fill="rgba(255,255,255,0.12)"/>'+
+               '<path d="M64 120c20-30 40-30 60 0" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round"/>'+
+               '<path d="M24 118c18-28 36-28 54 0" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity=".8"/></g>';
+      }
+      if(kind==='lock'){
+        return '<g transform="translate(68,160)"><rect x="20" y="68" width="136" height="90" rx="16" fill="rgba(255,255,255,0.12)"/>'+
+               '<rect x="56" y="48" width="64" height="40" rx="20" fill="#fff"/>'+
+               '<circle cx="88" cy="116" r="10" fill="#fff"/></g>';
+      }
+      if(kind==='gallery'){
+        return '<g transform="translate(56,156)"><rect x="28" y="36" width="140" height="100" rx="14" fill="rgba(255,255,255,0.12)"/>'+
+               '<rect x="44" y="52" width="100" height="76" rx="10" fill="#fff" opacity="0.9"/>'+
+               '<circle cx="70" cy="76" r="12" fill="#2563eb"/>'+
+               '<path d="M64 106l18-20 16 16 12-10 12 14H64z" fill="#93c5fd"/></g>';
+      }
+      return '';
+    }
+
+    var svg = '' +
+      '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(title.replace(/&/g,'&amp;'))+' feature graphic">' +
+      '<defs><linearGradient id="g'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+g1+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>'+
+      '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="url(#g'+id+')"/>'+
+      iconSVG(icon) +
+      '<g fill="#fff">'+
+        '<text x="'+(pad+220)+'" y="230" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-weight="700" font-size="64">'+ title.replace(/&/g,'&amp;') +'</text>'+
+        '<text x="'+(pad+220)+'" y="280" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="24" opacity="0.9">'+ (sub||'').replace(/&/g,'&amp;') +'</text>'+
+      '</g>'+
+      '</svg>';
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  }
 
   function buildCard(app){
     var a = createEl('a', 'card');
@@ -200,18 +197,11 @@
       fg.alt = app.title + ' feature graphic';
       fg.src = app.feature; a.appendChild(fg);
     } else {
-      var header = createEl('div', 'feature feature-brand');
-      var blur = createEl('div', 'fg-blur'); blur.style.backgroundImage = 'url(' + (app.icon || '') + ')';
-      var scrim = createEl('div', 'fg-scrim');
-      var content = createEl('div', 'fg-content');
-      var logo = createEl('img', 'fg-logo'); logo.alt = app.title + ' icon'; logo.src = app.icon;
-      var text = createEl('div', 'fg-text');
-      var ttl = createEl('div', 'fg-title', app.title);
-      var sub = createEl('div', 'fg-sub', app.tagline || '');
-      text.appendChild(ttl); text.appendChild(sub);
-      content.appendChild(logo); content.appendChild(text);
-      header.appendChild(blur); header.appendChild(scrim); header.appendChild(content);
-      a.appendChild(header);
+      // Generate a crisp vector banner from title/tagline
+      var fg2 = createEl('img', 'feature');
+      fg2.alt = app.title + ' feature graphic';
+      fg2.src = featureSVG(app);
+      a.appendChild(fg2);
     }
 
     // Icon + meta
@@ -234,17 +224,6 @@
     play.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); try{ window.open(app.url, '_blank', 'noopener'); }catch(e){ location.href = app.url; } });
     cta.appendChild(pkg); cta.appendChild(play);
 
-    // Per-card edit controls (visible in edit mode)
-    var controls = createEl('div', 'edit-controls');
-    var uploadBtn = createEl('button', 'edit-btn', 'Upload banner');
-    uploadBtn.type = 'button';
-    uploadBtn.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); beginUploadFor(app.id); });
-    var resetBtn = createEl('button', 'reset-btn', 'Reset');
-    resetBtn.type = 'button';
-    resetBtn.addEventListener('click', function(ev){ ev.preventDefault(); ev.stopPropagation(); clearBanner(app.id); });
-    controls.appendChild(uploadBtn); controls.appendChild(resetBtn);
-
-    a.appendChild(controls);
     a.appendChild(row);
     a.appendChild(cta);
 
@@ -271,9 +250,6 @@
     for(var i=0;i<list.length;i++){ grid.appendChild(buildCard(list[i])); }
     grid.style.display = list.length ? 'grid' : 'none';
     if(empty){ empty.hidden = !!list.length; }
-    document.body.classList.toggle('edit-active', !!state.editMode);
-    document.getElementById('toggleEdit').setAttribute('aria-pressed', state.editMode ? 'true' : 'false');
-    document.getElementById('toggleEdit').textContent = state.editMode ? 'Done' : 'Customize banners';
   }
 
   function filter(){
@@ -287,34 +263,8 @@
     render(list);
   }
 
-  function toggleEdit(){ state.editMode = !state.editMode; render(APPS); }
-
-  function beginUploadFor(appId){ state.pendingId = appId; document.getElementById('uploader').click(); }
-
-  function handleUploadChange(ev){
-    var file = ev.target.files && ev.target.files[0]; if(!file){ return; }
-    var id = state.pendingId; state.pendingId = null; ev.target.value = '';
-    if(!id){ return; }
-    processImageToBanner(file, function(err, dataUrl){
-      if(err){ console.warn('Banner processing failed:', err.message); return; }
-      // persist
-      var map = loadFeatureMap(); map[id] = dataUrl; saveFeatureMap(map);
-      for(var i=0;i<APPS.length;i++){ if(APPS[i].id === id){ APPS[i].feature = dataUrl; break; } }
-      render(APPS);
-    });
-  }
-
-  function clearBanner(appId){
-    var map = loadFeatureMap(); delete map[appId]; saveFeatureMap(map);
-    for(var i=0;i<APPS.length;i++){ if(APPS[i].id === appId){ APPS[i].feature = ''; break; } }
-    render(APPS);
-  }
-
   // ===== Init =====
-  applyFeatureMap();
   document.getElementById('q').addEventListener('input', filter);
-  document.getElementById('toggleEdit').addEventListener('click', toggleEdit);
-  document.getElementById('uploader').addEventListener('change', handleUploadChange);
   render(APPS);
 
   // ===== Smoke tests (console) =====
@@ -327,7 +277,7 @@
       q.value = 'vidx'; filter(); ok(grid.children.length === APPS.length, 'Search "vidx" should match all titles');
       q.value = 'unlikely-zz'; filter(); ok(grid.children.length === 0, 'Unlikely query should hide all');
       q.value = ''; filter(); ok(grid.children.length === APPS.length, 'Clearing search should restore all');
-      console.log('Play‑theme + upload smoke tests passed ✅');
+      console.log('Play‑theme (no customizer) smoke tests passed ✅');
     }catch(e){ console.warn('Smoke test failed:', e.message); }
   })();
   </script>
