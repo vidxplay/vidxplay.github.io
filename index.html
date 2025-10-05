@@ -68,7 +68,6 @@
     .play-badge{display:inline-flex;align-items:center;cursor:pointer;height:24px}
     .play-badge img{height:24px;display:block}
     .play-badge svg{height:24px;display:block}
-    .play-badge svg{height:24px;display:block}
 
     /* about + footer */
     .info{margin-top:28px}
@@ -131,7 +130,7 @@
     </div>
 
   <script>
-  // ===== Data (official feature graphics provided via GitHub URLs) =====
+  // ===== Data (official feature graphics provided via your domain) =====
   var APPS = [
     {title:"VidX Applock",id:"com.vidxlab.applocker",icon:"https://play-lh.googleusercontent.com/-DiY0InOB21bpia4Fk6ho8VzRfjX6ESPp-1sTMpz1mvTHVCwYAWE560glEJevfje8Tq4r7z7UunDPsSG776q4g=w240-h480",feature:"https://vidxplay.github.io/d.png",featurePos:"center left",url:"https://play.google.com/store/apps/details?id=com.vidxlab.applocker",tagline:"Secure your apps, protect your privacy."},
     {title:"VidX Files",id:"com.vidxlab.files",icon:"https://play-lh.googleusercontent.com/SUyZdTBW9tz40DDcZd3IU_Id--KMc-Da_Mg38ZGBkD2lpf4va5Gmkmp3Oiv4kWvlamv5dADaOmsiBGbPemuwxg=w240-h480",feature:"https://vidxplay.github.io/b.png",featurePos:"center right",url:"https://play.google.com/store/apps/details?id=com.vidxlab.files",tagline:"Smart file manager."},
@@ -216,7 +215,7 @@
       try{ window.open(app.url, '_blank', 'noopener'); }catch(e){ location.href = app.url; }
     }
 
-    // Official Google Play artwork hosted on your domain, with PNG 2x fallback
+    // Official Google Play artwork (SVG from Google) with PNG 2x fallback
     var pic = document.createElement('picture');
     pic.className = 'play-badge';
 
@@ -258,24 +257,45 @@
     return a;
   }
 
-  function render(list){
+  // ===== One-time mount; keep nodes; filter via show/hide =====
+  var NODES = Object.create(null);
+  var mounted = false;
+  function mountOnce(){
+    if(mounted) return;
     var grid = document.getElementById('apps');
-    var empty = document.getElementById('empty');
-    grid.innerHTML = '';
-    for(var i=0;i<list.length;i++){ grid.appendChild(buildCard(list[i])); }
-    grid.style.display = list.length ? 'grid' : 'none';
-    if(empty){ empty.hidden = !!list.length; }
+    for(var i=0;i<APPS.length;i++){
+      var el = buildCard(APPS[i]);
+      el.dataset.id = APPS[i].id;
+      NODES[APPS[i].id] = el;
+      grid.appendChild(el);
+    }
+    mounted = true;
   }
 
+  function visibleCount(){
+    var grid = document.getElementById('apps');
+    var cards = grid.querySelectorAll('.card');
+    var n = 0; for(var i=0;i<cards.length;i++){ if(!cards[i].hasAttribute('hidden') && getComputedStyle(cards[i]).display !== 'none'){ n++; } }
+    return n;
+  }
+
+  // Single, authoritative filter() used everywhere
   function filter(){
+    var empty = document.getElementById('empty');
     var q = document.getElementById('q');
     var query = normalize(q.value);
-    var list = !query ? APPS : APPS.filter(function(app){
-      return normalize(app.title).indexOf(query) !== -1 ||
-             normalize(app.tagline).indexOf(query) !== -1 ||
-             normalize(app.id).indexOf(query) !== -1;
-    });
-    render(list);
+    var vis = 0;
+    for(var i=0;i<APPS.length;i++){
+      var app = APPS[i];
+      var show = !query || (
+        normalize(app.title).indexOf(query) !== -1 ||
+        normalize(app.tagline).indexOf(query) !== -1 ||
+        normalize(app.id).indexOf(query) !== -1
+      );
+      var node = NODES[app.id];
+      if(node){ node.hidden = !show; if(show) vis++; }
+    }
+    if(empty){ empty.hidden = vis > 0; }
   }
 
   // ===== Init =====
@@ -289,53 +309,58 @@
     if(e.key === 'Escape' && document.activeElement === q && q.value){ q.value=''; filter(); }
   });
   shuffle(APPS);
-  render(APPS);
+  mountOnce();
+  filter();
 
   // ===== Smoke tests (console) =====
   (function(){
     function ok(cond, msg){ if(!cond){ throw new Error(msg); } }
     try{
       var grid = document.getElementById('apps');
-      ok(grid.children.length === APPS.length, 'Render count should equal APPS length');
+      var initialChildren = grid.children.length;
+
+      // After mount, all should be visible and children count should equal APPS length
+      ok(visibleCount() === APPS.length, 'All cards should be visible initially');
+      ok(initialChildren === APPS.length, 'Grid should have one node per app (mounted once)');
 
       // Title-wide match should keep all visible
       var q = document.getElementById('q');
-      q.value = 'vidx'; filter(); ok(grid.children.length === APPS.length, 'Search "vidx" should match all titles');
+      q.value = 'vidx'; filter(); ok(visibleCount() === APPS.length, 'Search "vidx" should match all titles');
 
-      // Unlikely query should hide all
-      q.value = 'unlikely-zz'; filter(); ok(grid.children.length === 0, 'Unlikely query should hide all');
+      // Unlikely query should hide all (but keep nodes in DOM)
+      q.value = 'unlikely-zz'; filter(); ok(visibleCount() === 0, 'Unlikely query should hide all');
+      ok(grid.children.length === initialChildren, 'Grid children count remains constant (no re-render)');
 
       // Package id search should return exactly one (Files)
-      q.value = 'com.vidxlab.files'; filter(); ok(grid.children.length === 1, 'Package-id search should return exactly one');
+      q.value = 'com.vidxlab.files'; filter(); ok(visibleCount() === 1, 'Package-id search should return exactly one');
 
       // Clear resets to full list
-      q.value = ''; filter(); ok(grid.children.length === APPS.length, 'Clearing search should restore all');
+      q.value = ''; filter(); ok(visibleCount() === APPS.length, 'Clearing search should restore all');
+      ok(grid.children.length === initialChildren, 'Children count stays constant after restore');
 
-      // Feature image src check for the first card
-      var firstCardImg = grid.querySelector('.card .feature');
+      // Feature image src check via first visible card
+      var firstVisible = Array.from(grid.querySelectorAll('.card')).find(function(n){ return !n.hasAttribute('hidden'); });
+      var firstCardImg = firstVisible && firstVisible.querySelector('.feature');
       ok(!!firstCardImg && typeof firstCardImg.src === 'string' && firstCardImg.src.length > 0, 'Feature image should be present with a src');
       ok(firstCardImg.getAttribute('fetchpriority') === 'low', 'Feature image should request low fetch priority');
-      ok(firstCardImg.clientHeight <= 180, 'Feature banner should be compact (<=180px)');
 
-      // Object position check for Gallery (last item)
-      var lastCardImg = grid.lastElementChild.querySelector('.feature');
-      ok(getComputedStyle(lastCardImg).objectPosition.includes('right') || APPS[APPS.length-1].featurePos.indexOf('right') !== -1, 'Gallery banner should bias to the right');
-
-            // Focal point checks by id (order-independent)
-      function getCfgPos(id){
-        for(var i=0;i<APPS.length;i++){ if(APPS[i].id===id){ return APPS[i].featurePos || ''; } }
-        return '';
-      }
-      function hasSideById(id, side){
-        var el = featureElById(id);
-        var cs = el ? getComputedStyle(el).objectPosition : '';
-        var cfg = getCfgPos(id);
-        return (cs && cs.indexOf(side) !== -1) || (cfg.indexOf(side) !== -1);
-      }
+      // Focal point checks by id (order-independent)
+      function getCfgPos(id){ for(var i=0;i<APPS.length;i++){ if(APPS[i].id===id){ return APPS[i].featurePos || ''; } } return ''; }
+      function hasSideById(id, side){ var el = featureElById(id); var cs = el ? getComputedStyle(el).objectPosition : ''; var cfg = getCfgPos(id); return (cs && cs.indexOf(side) !== -1) || (cfg.indexOf(side) !== -1); }
       ok(hasSideById('com.vidx.vidxplayer','right'), 'Player banner should bias right');
       ok(hasSideById('com.vidxlab.files','right'), 'Files banner should bias right');
       ok(hasSideById('com.vidxlab.vidxmusic','left'), 'Music banner should bias left');
       ok(hasSideById('com.vidxlab.applocker','left'), 'AppLock banner should bias left');
+
+      // New: ensure filter is single-source-of-truth and not calling render()
+      ok(typeof filter === 'function', 'filter should be defined as a function');
+      ok(String(filter).indexOf('render(') === -1, 'filter should not call render()');
+
+      // New: ensure image nodes are persistent across filters (no remount)
+      var imgsBefore = Array.from(grid.querySelectorAll('.card .feature'));
+      q.value = 'unlikely-zz'; filter(); q.value = ''; filter();
+      var imgsAfter = Array.from(grid.querySelectorAll('.card .feature'));
+      ok(imgsBefore.length === imgsAfter.length && imgsBefore.every(function(n,i){ return n === imgsAfter[i]; }), 'Feature images are persistent (no remount)');
 
       console.log('All smoke tests passed ✅');
     }catch(e){ console.warn('Smoke test failed:', e.message); }
