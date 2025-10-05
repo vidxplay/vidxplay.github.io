@@ -75,9 +75,15 @@
     .ibox{background:var(--tile);border:1px solid var(--divider);border-radius:12px;padding:16px}
     .ibox h2{margin:0 0 8px 0;font-size:16px}
     .ibox p{margin:0;color:var(--muted)}
+    .ibox .tagline{margin:0 0 8px 0;color:var(--muted);font-weight:600}
 
     footer{margin-top:24px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
     .footer-links a{color:#1a73e8;text-decoration:underline}
+
+    /* bottom-right Made in India badge */
+    .mi-badge{position:fixed;right:14px;bottom:14px;background:var(--ink);color:#fff;font-size:12px;padding:6px 10px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.15);opacity:.92;letter-spacing:.2px}
+    @media (prefers-color-scheme: dark){.mi-badge{background:#111;color:#fff}}
+    @media (max-width:640px){.mi-badge{right:10px;bottom:10px}}
 
     .card:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(1,135,95,.35),0 2px 6px rgba(0,0,0,.1)}
     @media (prefers-reduced-motion: reduce){.card{transition:none !important;transform:none !important}.card:hover{transform:none !important;box-shadow:0 1px 2px rgba(0,0,0,.06)}.ripple{display:none !important;animation:none !important}.card:hover .feature,.card:active .feature{transform:none !important}}
@@ -87,10 +93,9 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <img class="logo" src="https://vidxplay.github.io/vidxlab.jpg" alt="VidX Lab logo" width="40" height="40" loading="lazy" decoding="async">
         <div>
           <h1>VidX Lab — Apps</h1>
-          <div class="sub">Browse all apps from VidX Lab in a Play‑style layout.</div>
+          <div class="sub">Fast, private, and beautifully simple Android apps by VidX Lab.</div>
         </div>
       </div>
       <a class="store-link" href="https://play.google.com/store/apps/dev?id=5192085574932938666&hl=en" target="_blank" rel="noopener">View on Google Play</a>
@@ -108,15 +113,22 @@
     <section class="info" id="publisherInfo">
       <div class="ibox">
         <h2>About</h2>
-        <p>Innovation, security, and media tools—VidX Lab crafts apps designed to enrich and protect your mobile world by Arti Mishra.</p>
+        <p class="tagline">Fast, privacy‑first Android tools — Made in India 🇮🇳</p>
+        <p>
+          VidX Lab builds fast, lightweight Android apps for everyday media and privacy — by Arti Mishra & team. Our suite includes
+          <strong>VidX Player</strong> (play everything smoothly), <strong>VidX Music</strong> (offline audio & video),
+          <strong>VidX Files</strong> (smart file manager), <strong>VidX Gallery</strong> (clean & secure photos), and
+          <strong>VidX Applock</strong> (lock sensitive apps). We focus on clean design, low battery/data use, and
+          privacy‑first experiences built in India and updated regularly.
+        </p>
       </div>
     </section>
 
     <footer>
-      <div>Icons and listings belong to their respective owners.</div>
       <div class="footer-links"><a href="mailto:vidxplay@gmail.com">Contact</a> · <a href="https://vidxplay.github.io/tnc/filesprivacy.html" target="_blank" rel="noopener">Privacy</a></div>
     </footer>
-  </div>
+      <div class="mi-badge" aria-label="Made in India">Made in India 🇮🇳</div>
+    </div>
 
   <script>
   // ===== Data (official feature graphics provided via GitHub URLs) =====
